@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset='utf-8' />
+    <title>Türkiye Önemli Fay Hatları Haritası</title>
+    <meta name="description"
+        content="istanbul,deprem, fay, fay hattı, diri fay, mta,
+    istanbul deprem, kahramanmaraş, antakya,şanlıurfa, ankara, mersin, hatay, elbistan, malatya,
+     diyarbakır,adıyaman,pazarcık,gaziantep,iskenderun, istanbul depremi, beklenen büyük istanbul depremi,
+      earthquake ,geology, geology map, zemin, nereler, sağlam, sağlam zemin, geological map, ibb,
+       istanbul büyükşehir belediyesi,jeoloji, jeoloji haritasi, jeolojik harita, interaktif, ekşisözlük, twitter, facebook, tiktok" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CRMTRF89TM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'G-CRMTRF89TM');
+    </script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9427199806484048"
+     crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
+        integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+        crossorigin="" />
+
+    <link rel="stylesheet" href="assets/css/leaflet-sidebar.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.66.1/dist/L.Control.Locate.min.css" />
+
+    <!-- bootstrap css-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+    <link rel="stylesheet" href="assets/css/Leaflet.PolylineMeasure.css" />
+
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+        }
+
+        html,
+        body,
+        #map {
+            height: 100%;
+            font: 10pt "Helvetica Neue", Arial, Helvetica, sans-serif;
+        }
+
+        .lorem {
+            font-style: italic;
+            color: #AAA;
+        }
+
+        .legend {
+            padding-bottom: 35px;
+        }
+
+
+
+        .find-me-button {
+            background-color: #fff;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            font-weight: bold;
+            padding: 6px 12px;
+            text-align: center;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        .find-me-button:hover {
+            background-color: #f6f6f6;
+        }
+
+        .find-me-button:active {
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+   
+</head>
+
+<body>
+    <div id="sidebar" >
+        <!-- Nav tabs -->
+        <div class="leaflet-sidebar-tabs">
+            <ul role="tablist">
+                <li><a href="#home" role="tab"><i class="fa fa-bars"></i></a></li>
+
+
+                <!-- <li class="disabled"><a href="#messages" role="tab"><i class="fa fa-envelope"></i></a></li> -->
+            </ul>
+            <ul role="tablist">
+                <!--<li><a href="#" role="tab" target="_blank"><i class="fa fa-twitter fa-lg"></i></a></li>-->
+            </ul>
+            <!--<ul role="tablist">
+                <li><a href="#settings" role="tab"><i class="fa fa-gear"></i></a></li>
+            </ul> -->
+        </div>
+
+        <!-- Tab panes -->
+
+    </div>
+
+
+
+    <div id="map"></div>
+
+
+
+
+    <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
+        integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
+        crossorigin=""></script>
+    <script src="assets/js/leaflet-sidebar.js"></script>
+    <script src="assets/js/L.Control.MousePosition.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.66.1/dist/L.Control.Locate.min.js"
+        charset="utf-8"></script>
+    <!-- below is for bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.3.1.js"
+        integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+    </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+    </script>
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+    <script src="assets/js/Leaflet.PolylineMeasure.js"></script>
+    <script src="https://cdn.jsdelivr.net/leaflet.esri/1.0.4/esri-leaflet.js"></script>
+    <!--for reading geojson via ajax-->
+    <script src="assets/js/leaflet-ajax.js"></script>
+    <script src='https://unpkg.com/@turf/turf@6/turf.min.js'></script>
+
+
+    <script>
+        //mapbox
+
+        //basemaps defined below
+
+        /*var grayscale=L.tileLayer('https://tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {
+          attribution: 'Map data &copy; OpenStreetMap contributors'
+        });*/
+
+        var osm = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: ''
+        });
+
+        var Esri_WorldImagery = L.tileLayer(
+            'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+                attribution: ''
+            });
+        var grayscale = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+            attribution: '',
+            subdomains: 'abcd',
+            maxZoom: 19
+        });
+
+        var Stamen_TerrainLabels = L.tileLayer(
+            'https://stamen-tiles-{s}.a.ssl.fastly.net/terrain-labels/{z}/{x}/{y}{r}.{ext}', {
+                attribution: '',
+                subdomains: 'abcd',
+                minZoom: 0,
+                maxZoom: 18,
+                ext: 'png'
+            });
+        var esriImagery = L.esri.basemapLayer('Imagery');
+        var esriLabels = L.esri.basemapLayer('ImageryLabels');
+        var esriImageryLabels = L.featureGroup([esriImagery, esriLabels]);
+
+        var CartoDB_DarkMatter = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+            attribution: '',
+            subdomains: 'abcd',
+            maxZoom: 20
+        });
+
+
+        var map = L.map('map', {
+            zoom: 6,
+            center: [39.907, 36.06],
+            layers: [esriImageryLabels]
+
+        });
+
+
+
+
+        let fay = new L.geoJson(null, {
+            style: function (feature) {
+                if (feature.properties.importance == "1") {
+                    return {
+                        color: "#800026",
+                        weight: 8
+                    };
+                } else if (feature.properties.importance == "2") {
+                    return {
+                        color: "#bd0026",
+                        weight: 7
+                    };
+                } else if (feature.properties.importance == "3") {
+                    return {
+                        color: "#e31a1c",
+                        weight: 6
+                    };
+                } else if (feature.properties.importance == "4") {
+                    return {
+                        color: "#fc4e2a",
+                        weight: 5
+                    };
+                } else if (feature.properties.importance == "5") {
+                    return {
+                        color: "#fd8d3c",
+                        weight: 4
+                    };
+                } else if (feature.properties.importance == "6") {
+                    return {
+                        color: "#feb24c",
+                        weight: 3
+                    };
+                }
+
+            },
+            onEachFeature: function (feature, layer) {
+                var popupContent = "<b>Guvenilirlik: </b>" + feature.properties["CONF"] + "<br>" +
+                    "<b>Güncel Hareketlilik:</b>" + feature.properties["RATE"] + "<br>";
+                layer.bindPopup(popupContent);
+
+            }
+        }).addTo(map);
+
+
+
+
+        $.getJSON("assets/js/tr_faults_imp.geojson", function (data) {
+            fay.addData(data);
+        });
+
+
+        
+            depremler = L.geoJson(null, {
+
+
+                style: function (feature) {
+                    var mag = feature.properties.mag;
+                    if (mag >= 7.0) {
+                        return {
+                            color: "#c7e9b4",
+                            fillOpacity : 0.7,
+                            weight: 2
+                        };
+                    } else if (mag >= 6.5) {
+                        return {
+                            color: "#41b6c4",
+                            fillOpacity : 0.7,
+                            weight: 2
+                        };
+                    } else if (mag >= 5.0) {
+                        return {
+                            color: "#225ea8",
+                            fillOpacity : 0.7,
+                            weight: 2
+                        };
+                    } else {
+                        return {
+                            color: "green"
+                        }
+                    }
+                },
+
+                onEachFeature: function (feature, layer) {
+
+                    var popupText = "<b>Büyüklük:</b> " + feature.properties.mag +
+                        "<br><b>Yer:</b> " + feature.properties.place +
+                        "";
+
+                    layer.bindPopup(popupText, {
+                        closeButton: true,
+                        offset: L.point(0, -10)
+                    });
+                    layer.on('click', function () {
+                        layer.openPopup();
+                    });
+                },
+
+                pointToLayer: function (feature, latlng) {
+                    return L.circleMarker(latlng, {
+                        radius: Math.round(feature.properties.mag) * 1.3,
+                    });
+                },
+            }).addTo(map);
+
+            $.getJSON("assets/js/major_earthquakes.json", function (data) {
+                depremler.addData(data);
+             });
+
+
+
+
+
+
+        //grouping base layers defined above and assigning them to a var
+        var baseLayers = {
+            "Fay Hatları": fay,
+            "Depremler": depremler
+        };
+        var tileLayers = {
+            "Altlık Harita": CartoDB_DarkMatter,
+            "Uydu": esriImageryLabels
+
+        }
+
+        //initiating the side bar
+        var sidebar = L.control.sidebar({
+                container: 'sidebar',
+                position: 'right'
+            })
+            .addTo(map)
+            .open('home');
+        // add geolocator
+        /* L.control.locate({
+            strings: {
+                title: "Beni Bul"
+            }
+        }).addTo(map); */
+
+
+
+
+
+
+
+
+
+
+      
+
+
+        /*Legend specific*/
+        var legend = L.control({
+            position: "bottomleft"
+        });
+
+        legend.onAdd = function (map) {
+            var div = L.DomUtil.create("div", "legend")
+            img = ["assets/js/images/drawing.png"];;
+            div.innerHTML += " <img src=" + img + " height='100px' width='100px'>" + '<br>';
+
+            return div;
+        };
+
+        legend.addTo(map);
+
+        var findMeButton = L.control({
+            position: 'topleft'
+        });
+
+
+
+
+
+        L.Control.geocoder({
+            position: "topleft"
+        }).addTo(map);
+
+        L.control.polylineMeasure({
+            position: 'topleft',
+            unit: 'kilometres',
+            clearMeasurementsOnStop: true,
+            showClearControl: true,
+            showUnitControl: false,
+            tooltipTextFinish: 'Çizimi bitirmek için pembe noktaya tıklayın<br>',
+            tooltipTextDelete: 'Noktayı silmek için SHIFT tuşuna basarak tıklayın </b>',
+            tooltipTextMove: 'Noktayı hareket ettirmek için tıklayıp sürükleyin<br>',
+            tooltipTextResume: '<br>Ölçüme devam etmek için CTRL tuşuna basın</b>',
+            tooltipTextAdd: 'Nokta eklemek için CTRL\'ye basarak tıklayın</b>',
+        }).addTo(map);
+
+        // When the user's location is found, find the closest line
+        map.on('locationfound', function (e) {
+            var userLocation = e.latlng;
+            var closestLine = null;
+            var shortestDistance = Infinity;
+
+            // Create a marker for the user's location
+            var userMarker = L.marker(userLocation).addTo(map);
+
+            // Iterate over each line in the GeoJSON layer
+            fay.eachLayer(function (layer) {
+                // Calculate the distance between the user's location and the line
+                var distance = turf.pointToLineDistance(
+                    turf.point([userLocation.lng, userLocation.lat]),
+                    layer.toGeoJSON()
+                );
+
+
+                // If this line is closer than the previous closest line, update the closest line
+                if (distance < shortestDistance) {
+                    closestLine = layer;
+                    shortestDistance = distance;
+                }
+            });
+
+
+
+            // Create a popup with information about the closest line
+            var popupContent = "<b>Fayın Güvenilirlik Kodu: </b>" + closestLine.feature.properties["CONF"] + "<br>" +
+                "<b>Fayın Güncel Hareketliliği: </b>" +
+                closestLine.feature.properties["RATE"] + "<br>" +
+                'En Yakın Fay Attına Mesafeniz: ' + '<b>' + shortestDistance.toFixed(2) + '<b>' +
+                ' km<br>';
+
+            // Center the map on the closest line and add a popup to it
+            var closestLineLatLngs = closestLine.getLatLngs();
+            var closestLineCenter = L.latLngBounds(closestLineLatLngs).getCenter();
+            map.setView(closestLineCenter, 10);
+            closestLine.bindPopup(popupContent).openPopup();
+
+            map.on('locationerror', function (e) {
+                alert("Konumunuzu bulamıyoruz.");
+            });
+
+            
+
+        });
+
+          //Adding all layers and feauters to map
+       L.control.layers(null, baseLayers, {
+            position: "topleft",
+            collapsed: true
+        }).addTo(map);
+    </script>
+</body>
+
+</html>
